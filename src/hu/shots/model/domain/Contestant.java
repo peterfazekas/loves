@@ -24,4 +24,10 @@ public class Contestant {
 		return score;
 	}
 
+	@Override
+	public String toString() {
+		return "Contestant [id=" + id + ", shotResult=" + shotResult + ", score=" + score + "]";
+	}
+
+	
 }
