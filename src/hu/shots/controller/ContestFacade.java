@@ -23,8 +23,42 @@ public class ContestFacade {
 				.collect(Collectors.joining(" "));
 	}
 	
-	public String getAll() {
-		return contestants.stream().map(i -> i.toString()).collect(Collectors.joining());
+	public int getMaximumNumberOfShotsId() {
+		return contestants.stream()
+				.map(ContestantService::new)
+				.filter(i -> i.getShotLength() == getMaximumNumberOfShots())
+				.findAny()
+				.map(ContestantService::getId)
+				.get();
+	}
+	
+	public int getContestantScore(final int id) {
+		return getContestant(id).getScore();
+	}
+	
+	public String getSuccessShotIndexes(final int id) {
+		Contestant contestant = getContestant(id);
+		return new ContestantService(contestant).getSuccessShotIndexes();
+	}
+	
+	public long getSuccessShotCount(final int id) {
+		Contestant contestant = getContestant(id);
+		return new ContestantService(contestant).getSuccessShotCount();
+	}
+
+	private int getMaximumNumberOfShots() {
+		return contestants.stream()
+				.map(ContestantService::new)
+				.mapToInt(ContestantService::getShotLength)
+				.max()
+				.getAsInt();
+	}
+	
+	private Contestant getContestant(final int id) {
+		return contestants.stream()
+				.filter(i -> i.getId() == id)
+				.findAny()
+				.get();
 	}
 	
 }
