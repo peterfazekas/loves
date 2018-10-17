@@ -4,9 +4,9 @@ public class Contestant {
 	
 	private final int id;
 	private final String shotResult;
-	private final int score;
+	private final Integer score;
 	
-	public Contestant(int id, String shotResult, int score) {
+	public Contestant(int id, String shotResult, Integer score) {
 		this.id = id;
 		this.shotResult = shotResult;
 		this.score = score;
@@ -20,7 +20,7 @@ public class Contestant {
 		return shotResult;
 	}
 
-	public int getScore() {
+	public Integer getScore() {
 		return score;
 	}
 

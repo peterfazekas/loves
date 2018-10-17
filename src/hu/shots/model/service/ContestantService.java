@@ -1,5 +1,7 @@
 package hu.shots.model.service;
 
+import java.util.Arrays;
+
 import hu.shots.model.domain.Contestant;
 
 public class ContestantService {
@@ -36,6 +38,13 @@ public class ContestantService {
 		return getShotResult().chars()
 				.filter(i -> (char) i == '+')
 				.count();
+	}
+	
+	public int getLongestSuccessSequent() {
+		return Arrays.stream(getShotResult().split("-"))
+				.mapToInt(i -> i.length())
+				.max()
+				.getAsInt();
 	}
 	
 	private String getShotResult() {

@@ -8,6 +8,8 @@ import hu.shots.model.service.ContestantService;
 
 public class ContestFacade {
 
+	private static final String NEW_LINE = "\r\n";
+	private static final char TAB = (char) 9;
 	private final List<Contestant> contestants;
 
 	public ContestFacade(List<Contestant> contestants) {
@@ -44,6 +46,29 @@ public class ContestFacade {
 	public long getSuccessShotCount(final int id) {
 		Contestant contestant = getContestant(id);
 		return new ContestantService(contestant).getSuccessShotCount();
+	}
+	public int getLongestSuccessSequent(final int id) {
+		Contestant contestant = getContestant(id);
+		return new ContestantService(contestant).getLongestSuccessSequent();	
+	}
+	
+	public String getOrder() {
+		contestants.sort((j, i) -> i.getScore().compareTo(j.getScore()));
+		StringBuilder sb = new StringBuilder();
+		int prevScore = 0, prevPos = 0;
+		for (int i = 0; i < contestants.size(); i++) {
+			int score = contestants.get(i).getScore();
+			int pos = prevScore == score ? prevPos : i + 1;
+			sb.append(pos)
+			.append(TAB)
+			.append(contestants.get(i).getId())
+			.append(TAB)
+			.append(score)
+			.append(NEW_LINE);
+			prevScore = score;
+			prevPos = pos;
+		}
+		return sb.toString();
 	}
 
 	private int getMaximumNumberOfShots() {
